@@ -16,5 +16,5 @@ pub fn run_js(js: Cow<'static, str>)
 
     // Load Javascript
     context.eval(&js).unwrap();
-    println!("Dummy Statement");
+    println!("Javascript has finished Evaluating.");
 }

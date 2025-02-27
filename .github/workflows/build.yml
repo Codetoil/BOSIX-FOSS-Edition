@@ -1,0 +1,89 @@
+name: Build for Native
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  bosix-linux-x64:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build bosix (Cargo)
+        run: cargo build --verbose
+      - name: Create source code tarbell
+        run: git archive -o target/debug/source.tar.gz HEAD
+      - name: Copy License to output dist
+        run: cp LICENSE.md target/debug
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: bosix-linux-x64
+          path: |
+            target/debug/bosix
+            target/debug/source.tar.gz
+            target/debug/LICENSE.md
+  bosix-win-x64:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install MinGW Toolchain
+        run: sudo apt-get install mingw-w64
+      - name: Add MinGW Toolchain to Rust
+        run: rustup target add x86_64-pc-windows-gnu
+      - name: Build bosix (Cargo)
+        run: cargo build --verbose --target=x86_64-pc-windows-gnu
+      - name: Create source code tarbell
+        run: git archive -o target/x86_64-pc-windows-gnu/debug/source.tar.gz HEAD
+      - name: Copy License to output dist
+        run: cp LICENSE.md target/x86_64-pc-windows-gnu/debug
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: bosix-win-x64
+          path: |
+            target/x86_64-pc-windows-gnu/debug/bosix.exe
+            target/x86_64-pc-windows-gnu/debug/source.tar.gz
+            target/x86_64-pc-windows-gnu/debug/LICENSE.md
+  bosix-mac-arm64:
+    runs-on: macos-14
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build bosix (Cargo)
+        run: cargo build --verbose
+      - name: Create source code tarbell
+        run: git archive -o target/debug/source.tar.gz HEAD
+      - name: Copy License to output dist
+        run: cp LICENSE.md target/debug
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: bosix-mac-arm64
+          path: |
+            target/debug/bosix
+            target/debug/source.tar.gz
+            target/debug/LICENSE.md
+  bosix-mac-x64:
+    runs-on: macos-13
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build bosix (Cargo)
+        run: cargo build --verbose
+      - name: Create source code tarbell
+        run: git archive -o target/debug/source.tar.gz HEAD
+      - name: Copy License to output dist
+        run: cp LICENSE.md target/debug
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: bosix-mac-x64
+          path: |
+            target/debug/bosix
+            target/debug/source.tar.gz
+            target/debug/LICENSE.md
