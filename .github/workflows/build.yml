@@ -26,6 +26,25 @@ jobs:
             target/debug/bosix
             target/debug/source.tar.gz
             target/debug/LICENSE.md
+  bosix-linux-arm64:
+    runs-on: ubuntu-22.04-arm
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build bosix (Cargo)
+        run: cargo build --verbose
+      - name: Create source code tarbell
+        run: git archive -o target/debug/source.tar.gz HEAD
+      - name: Copy License to output dist
+        run: cp LICENSE.md target/debug
+      - name: Upload Output
+        uses: actions/upload-artifact@v4
+        with:
+          name: bosix-linux-arm64
+          path: |
+            target/debug/bosix
+            target/debug/source.tar.gz
+            target/debug/LICENSE.md
   bosix-win-x64:
     runs-on: ubuntu-24.04
 
