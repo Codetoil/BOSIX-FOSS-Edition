@@ -3,6 +3,13 @@
 version = 4
 
 [[package]]
+name = "bosix"
+version = "0.1.0"
+dependencies = [
+ "quick-js",
+]
+
+[[package]]
 name = "cc"
 version = "1.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -41,13 +48,6 @@ name = "once_cell"
 version = "1.20.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1261fe7e33c73b354eab43b1273a57c8f967d0391e80353e51f764ac02cf6775"
-
-[[package]]
-name = "platformer3d-engine"
-version = "0.1.0"
-dependencies = [
- "quick-js",
-]
 
 [[package]]
 name = "quick-js"
